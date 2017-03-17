@@ -1,0 +1,69 @@
+---
+mathjax: true
+title: 在Hexo中插入公式
+date: 2017-01-17 16:33:36
+tags: 
+	- Mathjax
+	- Hexo
+categories: Tips
+---
+在Hexo中用MathJax渲染$\LaTeX$语法编写的公式
+
+<!-- more -->
+
+### 解决方法
+
+在/blog/themes/themename/layout/下的footer.ejs文件中插入如下代码
+```javascript
+<script type="text/x-mathjax-config">
+ MathJax.Hub.Config({"HTML-CSS": { preferredFont: "TeX", availableFonts: ["STIX","TeX"], linebreaks: { automatic:true }, EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50) },
+ tex2jax: { inlineMath: [ ["$", "$"], ["\\(","\\)"] ], processEscapes: true, ignoreClass: "tex2jax_ignore|dno",skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']},
+ TeX: { noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } }, Macros: { href: "{}" } },
+ messageStyle: "none"
+ });
+</script>
+<script type="text/x-mathjax-config">
+ MathJax.Hub.Queue(function() {
+ var all = MathJax.Hub.getAllJax(), i;
+ for(i=0; i < all.length; i += 1) {
+ all[i].SourceElement().parentNode.className += ' has-jax';
+ }
+ });
+</script>
+<script type="text/x-mathjax-config">
+ MathJax.Hub.Queue(function() {
+ var all = MathJax.Hub.getAllJax(), i;
+ for(i=0; i < all.length; i += 1) {
+ all[i].SourceElement().parentNode.className += ' has-jax';
+ }
+ });
+</script>
+
+```
+
+### 测试 Mathjax
+
+
+#### 代码
+```markdown
+$$
+\begin{eqnarray}
+\nabla\cdot\vec{E} &=& \frac{\rho}{\epsilon_0} \\\\
+\nabla\cdot\vec{B} &=& 0 \\\\
+\nabla\times\vec{E} &=& -\frac{\partial B}{\partial t} \\\\
+\nabla\times\vec{B} &=& \mu_0\left(\vec{J}+\epsilon_0\frac{\partial E}{\partial t} \right)
+\end{eqnarray}
+%由于markdown会将\\转义为\，需将LaTeX语法中的换行\\写作\\\\
+$$
+
+```
+#### 结果
+$$
+\begin{eqnarray}
+\nabla\cdot\vec{E} &=& \frac{\rho}{\epsilon_0} \\\\
+\nabla\cdot\vec{B} &=& 0 \\\\
+\nabla\times\vec{E} &=& -\frac{\partial B}{\partial t} \\\\
+\nabla\times\vec{B} &=& \mu_0\left(\vec{J}+\epsilon_0\frac{\partial E}{\partial t} \right)
+\end{eqnarray}
+%由于markdown会将\\转义为\，需将LaTeX语法中的换行\\写作\\\\
+$$
